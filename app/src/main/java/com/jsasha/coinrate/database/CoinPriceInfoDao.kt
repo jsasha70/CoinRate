@@ -10,7 +10,7 @@ import com.jsasha.coinrate.pojo.CoinPriceInfo
 @Dao
 interface CoinPriceInfoDao {
     @Query("select * from full_price_list order by lastUpdate desc")
-    fun getPriceList(): LiveData<List<CoinPriceInfo>>
+    fun getPriceList(): LiveData<MutableList<CoinPriceInfo>>
 
     @Query("select * from full_price_list where fromSymbol=:fSym and toSymbol=:tSym limit 1")
     fun getPriceInfoAboutCoin(fSym: String, tSym: String): LiveData<CoinPriceInfo>

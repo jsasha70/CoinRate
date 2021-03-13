@@ -55,7 +55,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun getPriceListFromRowData(
         coinPriceInfoRawData: CoinPriceInfoRawData
-    ): List<CoinPriceInfo> {
+    ): MutableList<CoinPriceInfo> {
         val ret = mutableListOf<CoinPriceInfo>()
         val jsonObject = coinPriceInfoRawData.raw ?: return ret
 

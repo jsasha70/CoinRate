@@ -1,10 +1,10 @@
 package com.jsasha.coinrate
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.jsasha.coinrate.adapters.CoinInfoAdapter
 import com.jsasha.coinrate.databinding.ActivityCoinPriceListBinding
 
 class CoinPriceListActivity : AppCompatActivity() {
@@ -16,17 +16,21 @@ class CoinPriceListActivity : AppCompatActivity() {
         val binding = ActivityCoinPriceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val adapter = CoinInfoAdapter()
+        binding.rvCoinPriceList.adapter = adapter
+
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory(application)
         )[CoinViewModel::class.java]
 
-//        viewModel.priceList.observe(this, Observer {
-//            Log.d("TEST_OF_LOADING_DATA_5", it[0].toString())
-//        })
-
-        viewModel.getDetailInfo("BTC", "USD").observe(this, Observer {
-            Log.d("TEST_OF_LOADING_DATA_6", it.toString())
+        viewModel.priceList.observe(this, Observer {
+            if (adapter.coinInfoList.size == it.size) {
+                for ((i, c) in it.withIndex())
+                    adapter.coinInfoList[i] = c
+            } else {
+                adapter.coinInfoList = it
+            }
         })
     }
 }
