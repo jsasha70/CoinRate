@@ -1,10 +1,7 @@
 package com.jsasha.coinrate
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jsasha.coinrate.adapters.CoinInfoAdapter
 import com.jsasha.coinrate.databinding.ActivityCoinPriceListBinding

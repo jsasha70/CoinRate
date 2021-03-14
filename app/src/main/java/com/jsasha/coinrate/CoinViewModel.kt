@@ -1,7 +1,6 @@
 package com.jsasha.coinrate
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.google.gson.Gson
@@ -47,7 +46,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
             .subscribe({
                 db.coinPriceInfoDao().insertPriceList(it)
             }, {
-                Log.d("TEST_OF_LOADING_DATA_3", it.message ?: "error with no error text")
+//                Log.d("TEST_OF_LOADING_DATA_3", it.message ?: "error with no error text")
             })
         compositeDisposable.add(disposable)
     }

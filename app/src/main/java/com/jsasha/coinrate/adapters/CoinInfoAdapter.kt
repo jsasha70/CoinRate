@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jsasha.coinrate.databinding.ItemCoinInfoBinding
 import com.jsasha.coinrate.pojo.CoinPriceInfo
 import com.squareup.picasso.Picasso
-import android.util.Log
 import com.jsasha.coinrate.R
 
 class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
@@ -24,7 +23,7 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
         val binding = ItemCoinInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        log("onCreateViewHolder ${++n}")
+//        log("onCreateViewHolder ${++n}")
         return CoinInfoViewHolder(binding, n)
     }
 
@@ -37,14 +36,14 @@ class CoinInfoAdapter(private val context: Context) : RecyclerView.Adapter<CoinI
         holder.itemView.setOnClickListener {
             onCoinClickListener?.onCoinClick(coin)
         }
-        log("onBindViewHolder ${holder.n}: поз ${position + 1} (всего ${n})")
+//        log("onBindViewHolder ${holder.n}: поз ${position + 1} (всего ${n})")
     }
 
     override fun getItemCount() = coinInfoList.size
 
-    fun log(s: String) {
-        Log.d("TEST_OF_LOADING_DATA", s)
-    }
+//    fun log(s: String) {
+//        Log.d("TEST_OF_LOADING_DATA", s)
+//    }
 
     inner class CoinInfoViewHolder(binding: ItemCoinInfoBinding, val n: Int) : RecyclerView.ViewHolder(binding.root) {
         val ivLogoCoin = binding.ivLogoCoin
