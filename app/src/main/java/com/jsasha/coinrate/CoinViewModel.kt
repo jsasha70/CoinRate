@@ -39,14 +39,13 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
             .map {
                 getPriceListFromRowData(it)
             }
-            .delaySubscription(100, TimeUnit.SECONDS) // !! задержка подписки с первого шага !! ???
+            .delaySubscription(10, TimeUnit.SECONDS) // !! задержка подписки с первого шага !! ???
             .repeat()
             .retry()
             .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread()) - операции с БД не д.б. в главном потоке
             .subscribe({
                 db.coinPriceInfoDao().insertPriceList(it)
-//                Log.d("TEST_OF_LOADING_DATA_3", it.toString())
             }, {
                 Log.d("TEST_OF_LOADING_DATA_3", it.message ?: "error with no error text")
             })
