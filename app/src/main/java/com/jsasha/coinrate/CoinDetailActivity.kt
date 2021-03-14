@@ -2,10 +2,11 @@ package com.jsasha.coinrate
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.jsasha.coinrate.databinding.ActivityCoinDetailBinding
+import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {
 
@@ -13,7 +14,8 @@ class CoinDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_detail)
+        val binding = ActivityCoinDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: ""
         val toSymbol = intent.getStringExtra(EXTRA_TO_SYMBOL) ?: ""
@@ -27,7 +29,14 @@ class CoinDetailActivity : AppCompatActivity() {
             ViewModelProvider.AndroidViewModelFactory(application)
         )[CoinViewModel::class.java]
         viewModel.getDetailInfo(fromSymbol, toSymbol).observe(this, {
-            Log.d("TEST_OF_LOADING_DATA_!", it.toString())
+            binding.tvPrice.text = it.price.toString()
+            binding.tvMinPrice.text = it.lowDay.toString()
+            binding.tvMaxPrice.text = it.highDay.toString()
+            binding.tvLastMarket.text = it.lastMarket
+            binding.tvLastUpdate.text = it.getFormattedTime()
+            binding.tvFromSymbol.text = it.fromSymbol
+            binding.tvToSymbol.text = it.toSymbol
+            Picasso.get().load(it.getFullImageUrl()).into(binding.ivLogoCoin)
         })
 
     }
