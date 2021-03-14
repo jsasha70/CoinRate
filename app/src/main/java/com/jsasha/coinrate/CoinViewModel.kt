@@ -39,7 +39,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
             .map {
                 getPriceListFromRowData(it)
             }
-            .delaySubscription(2, TimeUnit.SECONDS) // !! задержка подписки с первого шага !! ???
+            .delaySubscription(100, TimeUnit.SECONDS) // !! задержка подписки с первого шага !! ???
             .repeat()
             .retry()
             .subscribeOn(Schedulers.io())

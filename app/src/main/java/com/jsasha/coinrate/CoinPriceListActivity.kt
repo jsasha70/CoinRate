@@ -1,11 +1,13 @@
 package com.jsasha.coinrate
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jsasha.coinrate.adapters.CoinInfoAdapter
 import com.jsasha.coinrate.databinding.ActivityCoinPriceListBinding
+import com.jsasha.coinrate.pojo.CoinPriceInfo
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -16,7 +18,12 @@ class CoinPriceListActivity : AppCompatActivity() {
         val binding = ActivityCoinPriceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = CoinInfoAdapter()
+        val adapter = CoinInfoAdapter(this)
+        adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
+            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
+                Log.d("TEST_OF_LOADING_DATA", "click on: ${coinPriceInfo.fromSymbol} / ${coinPriceInfo.toSymbol}")
+            }
+        }
         binding.rvCoinPriceList.adapter = adapter
 
         viewModel = ViewModelProvider(
@@ -24,10 +31,11 @@ class CoinPriceListActivity : AppCompatActivity() {
             ViewModelProvider.AndroidViewModelFactory(application)
         )[CoinViewModel::class.java]
 
-        viewModel.priceList.observe(this, Observer {
+        viewModel.priceList.observe(this, {
             if (adapter.coinInfoList.size == it.size) {
                 for ((i, c) in it.withIndex())
                     adapter.coinInfoList[i] = c
+                adapter.notifyDataSetChanged()
             } else {
                 adapter.coinInfoList = it
             }

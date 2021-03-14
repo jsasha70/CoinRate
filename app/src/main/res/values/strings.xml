@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CoinRate</string>
+    <string name="symbols_template">%s / %s (%d)</string>
+    <string name="logo_coin_description">Значок криптовалюты</string>
 </resources>
